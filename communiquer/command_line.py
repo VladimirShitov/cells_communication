@@ -44,29 +44,29 @@ def python_args_to_command_line_args(command: Optional[list] = None, **kwargs) -
 
 @doc_string(cellphone_db_parameters)
 def cellphone_db_methods_command(
-        meta_file_path: Union[Path, str],
-        counts_file_path: Union[Path, str],
-        method: str = "statistical_analysis",  # CPDB_METHOD
-        counts_data: str = "ensembl",  # GENES_ENCODING
-        project_name: str = "",
-        threshold: float = 0.1,
-        result_precision: int = 3,
-        output_path: Union[Path, str] = "",
-        output_format: str = "txt",  # CPDB_OUTPUT_FORMAT
-        means_result_name: str = "means",
-        significant_means_result_name: str = "significant_means",
-        deconvoluted_result_name: str = "deconvoluted",
-        verbose: bool = True,
-        database: Optional[str] = None,
-        subsampling: bool = False,
-        subsampling_log: bool = False,
-        subsampling_num_pc: int = 100,
-        subsampling_num_cells: Optional[int] = None,
-        debug_seed: int = -1,
-        pvalue: float = 0.05,
-        pvalues_result_name: str = "pvalues",
-        iterations: int = 1000,
-        threads: int = -1
+    meta_file_path: Union[Path, str],
+    counts_file_path: Union[Path, str],
+    method: str = "statistical_analysis",  # CPDB_METHOD
+    counts_data: str = "ensembl",  # GENES_ENCODING
+    project_name: str = "",
+    threshold: float = 0.1,
+    result_precision: int = 3,
+    output_path: Union[Path, str] = "",
+    output_format: str = "txt",  # CPDB_OUTPUT_FORMAT
+    means_result_name: str = "means",
+    significant_means_result_name: str = "significant_means",
+    deconvoluted_result_name: str = "deconvoluted",
+    verbose: bool = True,
+    database: Optional[str] = None,
+    subsampling: bool = False,
+    subsampling_log: bool = False,
+    subsampling_num_pc: int = 100,
+    subsampling_num_cells: Optional[int] = None,
+    debug_seed: int = -1,
+    pvalue: float = 0.05,
+    pvalues_result_name: str = "pvalues",
+    iterations: int = 1000,
+    threads: int = -1,
 ) -> str:
     """Generate a bash command to run CellPhoneDB
 
@@ -90,7 +90,7 @@ def cellphone_db_methods_command(
             means_result_name=means_result_name,
             significant_means_result_name=significant_means_result_name,
             deconvoluted_result_name=deconvoluted_result_name,
-            database=database
+            database=database,
         )
     )
 
@@ -100,7 +100,7 @@ def cellphone_db_methods_command(
             python_args_to_command_line_args(
                 subsampling_log=subsampling_log,
                 subsampling_num_pc=subsampling_num_pc,
-                subsampling_num_cells=subsampling_num_cells
+                subsampling_num_cells=subsampling_num_cells,
             )
         )
 
@@ -111,7 +111,7 @@ def cellphone_db_methods_command(
                 pvalue=pvalue,
                 pvalues_result_name=pvalues_result_name,
                 iterations=iterations,
-                threads=threads
+                threads=threads,
             )
         )
 
@@ -123,15 +123,15 @@ def cellphone_db_methods_command(
 
 
 def cellphonedb_heatmap_plot_command(
-        meta_file_path: Union[Path, str],
-        pvalues_path: Union[Path, str] = "./out/pvalues.txt",
-        output_path: Union[Path, str] = "./out",
-        count_name: str = "heatmap_count.pdf",
-        log_name: str = "heatmap_log_count.pdf",
-        count_network_name: str = "count_network.txt",
-        interaction_count_name: str = "interactions_count.txt",
-        pvalue: float = 0.05,
-        verbose: bool = True
+    meta_file_path: Union[Path, str],
+    pvalues_path: Union[Path, str] = "./out/pvalues.txt",
+    output_path: Union[Path, str] = "./out",
+    count_name: str = "heatmap_count.pdf",
+    log_name: str = "heatmap_log_count.pdf",
+    count_network_name: str = "count_network.txt",
+    interaction_count_name: str = "interactions_count.txt",
+    pvalue: float = 0.05,
+    verbose: bool = True
 ) -> str:
     command = ["cellphonedb", "plot", "heatmap_plot"]
 
@@ -154,13 +154,13 @@ def cellphonedb_heatmap_plot_command(
 
 
 def cellphonedb_dot_plot_command(
-        means_path: Union[Path, str],
-        pvalues_path: Union[Path, str],
-        output_path: Union[Path, str],
-        output_name: str = "plot.pdf",
-        rows: Optional[Union[Path, str]] = None,
-        columns: Optional[Union[Path, str]] = None,
-        verbose: bool = True
+    means_path: Union[Path, str],
+    pvalues_path: Union[Path, str],
+    output_path: Union[Path, str],
+    output_name: str = "plot.pdf",
+    rows: Optional[Union[Path, str]] = None,
+    columns: Optional[Union[Path, str]] = None,
+    verbose: bool = True
 ) -> str:
     command = ["cellphonedb", "plot", "dot_plot"]
 
@@ -169,7 +169,7 @@ def cellphonedb_dot_plot_command(
             means_path=means_path,
             pvalues_path=pvalues_path,
             output_path=output_path,
-            output_name=output_name
+            output_name=output_name,
         )
     )
 

@@ -8,8 +8,12 @@ import rpy2.robjects.packages as rpackages
 from rpy2 import robjects
 
 from communiquer.drawing import draw_chord_diagram, draw_dotplot
-from communiquer.command_line import cellphone_db_methods_command, \
-    run_command_line_subprocess, cellphonedb_heatmap_plot_command, cellphonedb_dot_plot_command
+from communiquer.command_line import (
+    cellphone_db_methods_command,
+    run_command_line_subprocess,
+    cellphonedb_heatmap_plot_command,
+    cellphonedb_dot_plot_command
+)
 from communiquer.utils import matrix_to_long_data_frame
 
 
@@ -19,10 +23,10 @@ class CellCommunicationsLauncher:
         self.cell_types = self.meta_df[self.cell_labels_column].unique()
 
     def __init__(
-            self,
-            meta_file_path: Union[Path, str],
-            counts_file_path: Union[Path, str],
-            cell_labels_column: str = "cell_type"
+        self,
+        meta_file_path: Union[Path, str],
+        counts_file_path: Union[Path, str],
+        cell_labels_column: str = "cell_type"
     ):
         self.meta_file_path: Union[Path, str] = meta_file_path
         self.counts_file_path: Union[Path, str] = counts_file_path
@@ -54,7 +58,9 @@ class CellCommunicationsLauncher:
         """
 
         if self.counts_df is None:
-            raise ValueError("Can't visualise connections. Please, fill in `counts_df` first")
+            raise ValueError(
+                "Can't visualise connections. Please, fill in `counts_df` first"
+            )
 
         return draw_chord_diagram(matrix=self.counts_df, ax=ax, plot_size=plot_size)
 
@@ -81,31 +87,31 @@ class CellPhoneDBLauncher(CellCommunicationsLauncher):
         return interactions_dataframes
 
     def __init__(
-            self,
-            meta_file_path: Union[Path, str],
-            counts_file_path: Union[Path, str],
-            cell_labels_column: str = "cell_type",
-            method="statistical_analysis",  # : CPDB_METHOD
-            counts_data: str = "ensembl",  # : GENES_ENCODING
-            project_name: str = "",
-            threshold: float = 0.1,
-            result_precision: int = 3,
-            output_path: Union[Path, str] = "out/",
-            output_format: str = "txt",  # : CPDB_OUTPUT_FORMAT
-            means_result_name: str = "means",
-            significant_means_result_name: str = "significant_means",
-            deconvoluted_result_name: str = "deconvoluted",
-            verbose: bool = True,
-            database: Optional[str] = None,
-            subsampling: bool = False,
-            subsampling_log: bool = False,
-            subsampling_num_pc: int = 100,
-            subsampling_num_cells: Optional[int] = None,
-            debug_seed: int = -1,
-            pvalue: float = 0.05,
-            pvalues_result_name: str = "pvalues",
-            iterations: int = 1000,
-            threads: int = -1
+        self,
+        meta_file_path: Union[Path, str],
+        counts_file_path: Union[Path, str],
+        cell_labels_column: str = "cell_type",
+        method="statistical_analysis",  # : CPDB_METHOD
+        counts_data: str = "ensembl",  # : GENES_ENCODING
+        project_name: str = "",
+        threshold: float = 0.1,
+        result_precision: int = 3,
+        output_path: Union[Path, str] = "out/",
+        output_format: str = "txt",  # : CPDB_OUTPUT_FORMAT
+        means_result_name: str = "means",
+        significant_means_result_name: str = "significant_means",
+        deconvoluted_result_name: str = "deconvoluted",
+        verbose: bool = True,
+        database: Optional[str] = None,
+        subsampling: bool = False,
+        subsampling_log: bool = False,
+        subsampling_num_pc: int = 100,
+        subsampling_num_cells: Optional[int] = None,
+        debug_seed: int = -1,
+        pvalue: float = 0.05,
+        pvalues_result_name: str = "pvalues",
+        iterations: int = 1000,
+        threads: int = -1
     ):
         super().__init__(
             meta_file_path=meta_file_path,
@@ -184,15 +190,21 @@ class CellPhoneDBLauncher(CellCommunicationsLauncher):
 
     def read_output(self, convert_to_cellchat_format=True) -> NoReturn:
         """Create dataframes from cellphoneDB output files"""
-        self.means_df = pd.read_csv(self.output_file_path(self.means_result_name), sep="\t")
+        self.means_df = pd.read_csv(
+            self.output_file_path(self.means_result_name), sep="\t"
+        )
 
         self.significant_means_df = pd.read_csv(
-            self.output_file_path(self.significant_means_result_name), sep="\t")
+            self.output_file_path(self.significant_means_result_name), sep="\t"
+        )
 
-        self.pvalues_df = pd.read_csv(self.output_file_path(self.pvalues_result_name), sep="\t")
+        self.pvalues_df = pd.read_csv(
+            self.output_file_path(self.pvalues_result_name), sep="\t"
+        )
 
         self.deconvoluted_df = pd.read_csv(
-            self.output_file_path(self.deconvoluted_result_name), sep="\t")
+            self.output_file_path(self.deconvoluted_result_name), sep="\t"
+        )
 
         if convert_to_cellchat_format:
             self.convert_output_to_cellchat_format()
@@ -202,14 +214,14 @@ class CellPhoneDBLauncher(CellCommunicationsLauncher):
         self.pvalues_dfs = self._df_to_cellchat_format(self.pvalues_df)
 
     def inbuilt_heatmap_plot(
-            self,
-            output_path: Union[Path, str] = "./out",
-            counts_file_path: str = "heatmap_count.pdf",
-            log_name: str = "heatmap_log_count.pdf",
-            count_network_name: str = "count_network.txt",
-            interaction_counts_file_path: str = "interactions_count.txt",
-            pvalue: float = 0.05,
-            verbose: bool = True
+        self,
+        output_path: Union[Path, str] = "./out",
+        counts_file_path: str = "heatmap_count.pdf",
+        log_name: str = "heatmap_log_count.pdf",
+        count_network_name: str = "count_network.txt",
+        interaction_counts_file_path: str = "interactions_count.txt",
+        pvalue: float = 0.05,
+        verbose: bool = True
     ):
         """Plot a heatmap with counts by interaction pair
 
@@ -244,7 +256,7 @@ class CellPhoneDBLauncher(CellCommunicationsLauncher):
             count_network_name=count_network_name,
             interaction_counts_file_path=interaction_counts_file_path,
             pvalue=pvalue,
-            verbose=verbose
+            verbose=verbose,
         )
 
         if verbose:
@@ -253,12 +265,12 @@ class CellPhoneDBLauncher(CellCommunicationsLauncher):
         run_command_line_subprocess(command=command, verbose=verbose)
 
     def inbuilt_dot_plot(
-            self,
-            output_path: Union[Path, str],
-            output_name: str = "plot.pdf",
-            rows: Optional[Union[Path, str]] = None,
-            columns: Optional[Union[Path, str]] = None,
-            verbose: bool = True
+        self,
+        output_path: Union[Path, str],
+        output_name: str = "plot.pdf",
+        rows: Optional[Union[Path, str]] = None,
+        columns: Optional[Union[Path, str]] = None,
+        verbose: bool = True
     ):
         """Make a dot plot with counts by interaction pair
 
@@ -286,7 +298,7 @@ class CellPhoneDBLauncher(CellCommunicationsLauncher):
             output_name=output_name,
             rows=rows,
             columns=columns,
-            verbose=verbose
+            verbose=verbose,
         )
 
         if verbose:
@@ -454,7 +466,15 @@ class CellChatLauncher(CellCommunicationsLauncher):
         utils = rpackages.importr("utils")
         utils.chooseCRANmirror(ind=1)  # select the first mirror in the list
 
-        packages = ("dplyr", "ggplot2", "patchwork", "BiocManager", "Cairo", "NMF", "devtools")
+        packages = (
+            "dplyr",
+            "ggplot2",
+            "patchwork",
+            "BiocManager",
+            "Cairo",
+            "NMF",
+            "devtools"
+        )
 
         for package in packages:
             if not rpackages.isinstalled(package):
@@ -465,7 +485,11 @@ class CellChatLauncher(CellCommunicationsLauncher):
         # Uncomment if there is an error with tar
         # robjects.r('Sys.setenv(TAR = "/bin/tar")')
 
-        github_packages = ("jokergoo/circlize", "jokergoo/ComplexHeatmap", "sqjin/CellChat")
+        github_packages = (
+            "jokergoo/circlize",
+            "jokergoo/ComplexHeatmap",
+            "sqjin/CellChat"
+        )
 
         for package in github_packages:
             robjects.r(f'devtools::install_github("{package}")')

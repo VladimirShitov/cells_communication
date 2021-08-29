@@ -5,8 +5,9 @@ import pandas as pd
 import scanpy as sc
 
 
-def create_cellphone_db_meta_file(adata: sc.AnnData, meta_file_path: Union[Path, str],
-                                  clusters_key: str = "leiden") -> NoReturn:
+def create_cellphone_db_meta_file(
+    adata: sc.AnnData, meta_file_path: Union[Path, str], clusters_key: str = "leiden"
+) -> NoReturn:
     """Convert cells clusters information to the format accepted by CellPhoneDB
 
     Parameters
@@ -35,7 +36,9 @@ def doc_string(docstring: str = "default doc"):
     return wrapper
 
 
-def cellcall_cell_id(adata: sc.AnnData, cell_name: str, clusters_key: str = "leiden") -> str:
+def cellcall_cell_id(
+    adata: sc.AnnData, cell_name: str, clusters_key: str = "leiden"
+) -> str:
     """Transform cell ID from adata to cellcall format
 
     Description of the format: https://github.com/ShellyCoder/cellcall#211-load-data
@@ -78,9 +81,7 @@ def counts_to_cellcall_format(adata, clusters_key="leiden"):
         cells_to_take.append(cell_idx)
 
     df = pd.DataFrame.sparse.from_spmatrix(
-        adata.raw.X[cells_to_take, :],
-        index=cells_ids,
-        columns=adata.raw.var_names
+        adata.raw.X[cells_to_take, :], index=cells_ids, columns=adata.raw.var_names
     )
 
     return df.T

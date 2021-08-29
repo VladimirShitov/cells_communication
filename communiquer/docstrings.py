@@ -46,4 +46,3 @@ threads: int = 4
     Max of threads to process the data. Ignored if `method` is not
     "statistical_analysis"
 """
-

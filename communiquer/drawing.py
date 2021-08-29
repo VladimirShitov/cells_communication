@@ -25,8 +25,9 @@ def normalize_vector(vector: np.array, normalize_to: float) -> np.array:
     return vector * normalize_to / vector_norm
 
 
-def orthogonal_vector(point: np.array, width: float,
-                      normalize_to: Optional[float] = None) -> np.array:
+def orthogonal_vector(
+    point: np.array, width: float, normalize_to: Optional[float] = None
+) -> np.array:
     """Get orthogonal vector to a `point`
 
     point: np.array
@@ -54,13 +55,13 @@ def orthogonal_vector(point: np.array, width: float,
 
 
 def draw_self_loop(
-        point: np.array,
-        ax: Optional[plt.Axes] = None,
-        padding: float = 1.5,
-        width: float = 0.3,
-        plot_size: int = 10,
-        linewidth: float = 0.2,
-        color: str = "pink"
+    point: np.array,
+    ax: Optional[plt.Axes] = None,
+    padding: float = 1.5,
+    width: float = 0.3,
+    plot_size: int = 10,
+    linewidth: float = 0.2,
+    color: str = "pink",
 ) -> plt.Axes:
     """Draw a loop from `point` to itself
 
@@ -110,15 +111,22 @@ def draw_self_loop(
         arrowstyle="-|>",
         color=color,
         alpha=0.5,
-        mutation_scale=30  # arrowsize in nx.draw_networkx_edges()
+        mutation_scale=30,  # arrowsize in nx.draw_networkx_edges()
     )
     ax.add_patch(patch)
 
     return ax
 
 
-def draw_graph_edge(graph: nx.Graph, pos: dict, edge: tuple, edge_weight: float,
-                    ax: plt.Axes, color: str, arc_radius: float = 0.2) -> plt.Axes:
+def draw_graph_edge(
+    graph: nx.Graph,
+    pos: dict,
+    edge: tuple,
+    edge_weight: float,
+    ax: plt.Axes,
+    color: str,
+    arc_radius: float = 0.2,
+) -> plt.Axes:
     """Draw the given edge of the network
 
     Parameters
@@ -194,7 +202,9 @@ def draw_graph_edges(graph: nx.Graph, pos: dict, ax: plt.Axes):
             draw_self_loop(point=pos[edge[0]], ax=ax, linewidth=edge_weights[edge])
             continue
 
-        draw_graph_edge(graph, pos, edge, edge_weight=edge_weights[edge], ax=ax, color="pink")
+        draw_graph_edge(
+            graph, pos, edge, edge_weight=edge_weights[edge], ax=ax, color="pink"
+        )
         edges_to_draw.remove(edge)
 
         # Edges between the same vertices look confusing, if they have the same style
@@ -216,8 +226,12 @@ def draw_graph_edges(graph: nx.Graph, pos: dict, ax: plt.Axes):
     return ax
 
 
-def draw_chord_diagram(graph: Optional[nx.Graph] = None, matrix: Optional[pd.DataFrame] = None,
-                       ax=None, plot_size=10) -> plt.Axes:
+def draw_chord_diagram(
+    graph: Optional[nx.Graph] = None,
+    matrix: Optional[pd.DataFrame] = None,
+    ax=None,
+    plot_size=10
+) -> plt.Axes:
     """Draw weighted connections between the nodes of the `graph`"""
 
     if graph is None and matrix is None:
@@ -232,12 +246,8 @@ def draw_chord_diagram(graph: Optional[nx.Graph] = None, matrix: Optional[pd.Dat
     pos = nx.circular_layout(graph, center=(0, 0))
 
     nx.draw_networkx_nodes(
-        graph,
-        pos=pos,
-        node_color="springgreen",
-        ax=ax,
-        alpha=0.7,
-        node_size=1000)
+        graph, pos=pos, node_color="springgreen", ax=ax, alpha=0.7, node_size=1000
+    )
 
     draw_graph_edges(graph, pos, ax)
 
@@ -256,7 +266,12 @@ def draw_dotplot(df, figsize=(12, 6)):
 
     # plot data row-wise as text with circle radius according to count
     for _, row in df.iterrows():
-        bbox_props = {"boxstyle": f'circle, pad = {row["radius"]}', "fc": "w", "ec": "r", "lw": 2}
+        bbox_props = {
+            "boxstyle": f'circle, pad = {row["radius"]}',
+            "fc": "w",
+            "ec": "r",
+            "lw": 2
+        }
 
         if row["count"]:
             ax.annotate(
