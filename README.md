@@ -47,6 +47,14 @@ Provide paths to the data. You have to prepare 2 files:
 1. **Normalized counts matrix**. Rows are genes, columns are barcodes (or other cells IDs
 2. **Meta information about cells**. It must have 2 columns: the first one with cell IDs (e.g. barcodes), and the second with cells labels (e.g. cell types)
 
+
+```python
+counts_path = Path("data/pbmc3k_counts.tsv")
+meta_path = Path("data/pbmc3k_meta.txt")
+
+cpdb_output_path = Path("data/cpdb_output")
+```
+
 Example of the meta file:
 |Cell             | cell_type      |
 |-----------------|:---------------|
